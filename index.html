@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChickCheck — Poultry & Smart Farm Management Studio</title>
+  <meta name="description" content="ChickCheck Poultry Management App with 40-Day Flock Ledger, Visitor Tracking, and Feed Management.">
+  
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="light">
+
+  <div class="app-layout">
+
+    <!-- ==================================================================== -->
+    <!-- CHICKCHECK SIDE NAVIGATION MENU                                      -->
+    <!-- ==================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      
+      <!-- Brand Header -->
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <i class="fa-solid fa-egg"></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">ChickCheck</span>
+          <span class="brand-tag">Poultry Manager</span>
+        </div>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" title="Toggle Menu">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-menu">
+        <div class="menu-label">ChickCheck Menu</div>
+        
+        <!-- 1. Dashboard -->
+        <button class="menu-item active" data-tab="tab-dashboard">
+          <i class="fa-solid fa-chart-pie menu-icon"></i>
+          <span class="menu-text">1. Dashboard</span>
+        </button>
+
+        <!-- 2. New Batch -->
+        <button class="menu-item" data-tab="tab-batches">
+          <i class="fa-solid fa-boxes-stacked menu-icon"></i>
+          <span class="menu-text">2. New Batch</span>
+          <span class="menu-badge" id="badge-batches-count">0</span>
+        </button>
+
+        <!-- 3. Visits -->
+        <button class="menu-item" data-tab="tab-visits">
+          <i class="fa-solid fa-user-doctor menu-icon"></i>
+          <span class="menu-text">3. Visits</span>
+          <span class="menu-badge" id="badge-visits-count">0</span>
+        </button>
+
+        <!-- 4. Medicine -->
+        <button class="menu-item" data-tab="tab-medicine">
+          <i class="fa-solid fa-pills menu-icon"></i>
+          <span class="menu-text">4. Medicine</span>
+          <span class="menu-badge" id="badge-medicine-count">0</span>
+        </button>
+
+        <!-- 5. Farmer Expenditure -->
+        <button class="menu-item" data-tab="tab-expenditure">
+          <i class="fa-solid fa-wallet menu-icon"></i>
+          <span class="menu-text">5. Farmer Expenditure</span>
+        </button>
+
+        <!-- 6. History -->
+        <button class="menu-item" data-tab="tab-history">
+          <i class="fa-solid fa-clock-rotate-left menu-icon"></i>
+          <span class="menu-text">6. History</span>
+          <span class="menu-badge" id="badge-history-count">0</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar User Footer -->
+      <div class="sidebar-user-card">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ChickCheckFarmer" alt="Farmer Avatar" class="user-avatar">
+        <div class="user-info">
+          <span class="user-name">Rajesh Kumar</span>
+          <span class="user-role">ChickCheck Admin</span>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ==================================================================== -->
+    <!-- MAIN CONTENT AREA                                                   -->
+    <!-- ==================================================================== -->
+    <div class="main-wrapper">
+
+      <!-- Top Header with Search Bar -->
+      <header class="top-header">
+        
+        <div class="header-search-bar">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="global-search-input" placeholder="Search ChickCheck batches, visits, medicine, expenses..." autocomplete="off">
+          <button class="search-clear-btn hidden" id="search-clear-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-primary-sm open-modal-btn" data-modal="modal-batch">
+            <i class="fa-solid fa-plus"></i> Start a New Batch
+          </button>
+          
+          <button class="btn btn-icon" id="theme-toggle-btn" title="Toggle Light/Dark Theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+        </div>
+
+      </header>
+
+      <!-- Search Overlay Dropdown -->
+      <div class="search-results-dropdown hidden" id="search-results-dropdown">
+        <div class="dropdown-header">
+          <span>ChickCheck Search Results</span>
+          <span class="results-count" id="search-count-label">0 matches</span>
+        </div>
+        <div class="dropdown-body" id="search-results-list">
+          <!-- Dynamic Search Matches -->
+        </div>
+      </div>
+
+      <!-- MAIN TAB CONTENT PANELS -->
+      <main class="content-container">
+
+        <!-- ================================================================ -->
+        <!-- 1. DASHBOARD                                                     -->
+        <!-- ================================================================ -->
+        <section class="tab-panel active" id="tab-dashboard">
+          
+          <div class="welcome-banner">
+            <div class="banner-text">
+              <h1>Welcome to ChickCheck Dashboard, Rajesh! 🐣</h1>
+              <p>Manage active ongoing poultry batches, visitor inspections, medicine alerts, and expenditures.</p>
+            </div>
+            <div class="banner-actions">
+              <button class="btn btn-primary open-modal-btn" data-modal="modal-batch">
+                <i class="fa-solid fa-plus"></i> Start a New Batch
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Metrics Grid -->
+          <div class="metrics-grid">
+            
+            <div class="metric-card" data-target="tab-batches">
+              <div class="metric-icon flamingo"><i class="fa-solid fa-boxes-stacked"></i></div>
+              <div class="metric-info">
+                <span class="metric-val" id="metric-total-batches">0 Ongoing</span>
+                <span class="metric-label">2. New Batch</span>
+              </div>
+            </div>
+
+            <div class="metric-card" data-target="tab-visits">
+              <div class="metric-icon custard"><i class="fa-solid fa-user-doctor"></i></div>
+              <div class="metric-info">
+                <span class="metric-val" id="metric-upcoming-visits">0 Scheduled</span>
+                <span class="metric-label">3. Visits</span>
+              </div>
+            </div>
+
+            <div class="metric-card" data-target="tab-medicine">
+              <div class="metric-icon flamingo"><i class="fa-solid fa-pills"></i></div>
+              <div class="metric-info">
+                <span class="metric-val" id="metric-low-medicine">0 Alerts</span>
+                <span class="metric-label">4. Medicine</span>
+              </div>
+            </div>
+
+            <div class="metric-card" data-target="tab-expenditure">
+              <div class="metric-icon custard"><i class="fa-solid fa-wallet"></i></div>
+              <div class="metric-info">
+                <span class="metric-val" id="metric-total-expenditure">₹ 0</span>
+                <span class="metric-label">5. Farmer Expenditure</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ONGOING BATCHES DASHBOARD CARDS CONTAINER -->
+          <div class="dashboard-ongoing-section margin-bottom">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-fire-flame-curved"></i> Active Ongoing Batches</h3>
+              <button class="btn btn-primary-sm open-modal-btn" data-modal="modal-batch">
+                <i class="fa-solid fa-plus"></i> Start New Batch
+              </button>
+            </div>
+
+            <div class="ongoing-batches-grid" id="dash-ongoing-batches-container">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Recent Activity Table -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-clock-rotate-left"></i> 6. ChickCheck History Log</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Module</th>
+                    <th>Description</th>
+                    <th>Logged By</th>
+                  </tr>
+                </thead>
+                <tbody id="dash-activity-tbody">
+                  <!-- Dynamic Rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- 2. NEW BATCH (BATCH DETAILS & 40-DAY MULTI-LEVEL GRID)           -->
+        <!-- ================================================================ -->
+        <section class="tab-panel" id="tab-batches">
+          <div class="page-title-row">
+            <div>
+              <h2><i class="fa-solid fa-boxes-stacked"></i> 2. Ongoing Batches & 40-Day Performance Ledger</h2>
+              <p>Monitor mortality, feed intake, FCR, and feed bag inventory for your active flock.</p>
+            </div>
+            <button class="btn btn-primary open-modal-btn" data-modal="modal-batch">
+              <i class="fa-solid fa-plus"></i> Start a New Batch
+            </button>
+          </div>
+
+          <!-- Active Batches Selector Bar -->
+          <div class="batch-selector-bar hidden" id="batch-selector-bar">
+            <div class="batch-selector-left">
+              <label for="active-batch-select">Select Ongoing Batch:</label>
+              <select id="active-batch-select" class="custard-select">
+                <!-- Dynamic Batch Options -->
+              </select>
+            </div>
+            <div class="batch-selector-right">
+              <span class="batch-rfq-badge" id="active-batch-rfq-badge">RFQ: #RFQ-CHK-2026-0000</span>
+              <button class="btn btn-ghost-sm" id="complete-batch-toggle-btn" title="Mark Batch Completed">
+                <i class="fa-solid fa-circle-check"></i> Complete Batch
+              </button>
+            </div>
+          </div>
+
+          <!-- 40-Day Multi-Level Performance Ledger Panel -->
+          <div class="panel-card" id="batch-tracking-panel">
+            <div class="panel-header">
+              <h3 id="tracker-batch-title"><i class="fa-solid fa-calendar-days"></i> 40-Day Daily Record Grid</h3>
+              <span class="tag tag-custard">40 Days Fixed Cycle</span>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table tracking-table multi-header-table" id="day-40-tracking-table">
+                <thead>
+                  <tr>
+                    <th rowspan="2" style="min-width: 110px;">Date</th>
+                    <th rowspan="2" style="min-width: 110px;">Age of Chick</th>
+                    <th colspan="3" class="th-group th-flamingo">Mortality</th>
+                    <th colspan="2" class="th-group th-custard">Feed Intake (g/chick)</th>
+                    <th colspan="2" class="th-group th-flamingo">FCR</th>
+                    <th colspan="4" class="th-group th-custard">Feed In Bags</th>
+                    <th rowspan="2" style="min-width: 100px;">Actions</th>
+                  </tr>
+                  <tr>
+                    <th class="th-sub">Daily</th>
+                    <th class="th-sub">Total</th>
+                    <th class="th-sub">Cum %</th>
+                    <th class="th-sub">Std</th>
+                    <th class="th-sub">Actual</th>
+                    <th class="th-sub">Std</th>
+                    <th class="th-sub">Actual</th>
+                    <th class="th-sub">Delivered</th>
+                    <th class="th-sub">Consumed / Day</th>
+                    <th class="th-sub">Total Consumed</th>
+                    <th class="th-sub">Remaining</th>
+                  </tr>
+                </thead>
+                <tbody id="day-40-tracking-tbody">
+                  <!-- 40 Rows Generated Dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- 3. VISITS (WITH ADD VISIT FORM & SATISFACTION STATUS)             -->
+        <!-- ================================================================ -->
+        <section class="tab-panel" id="tab-visits">
+          <div class="page-title-row">
+            <div>
+              <h2><i class="fa-solid fa-user-doctor"></i> 3. Farm Visits & Field Inspections</h2>
+              <p>Log supervisor, feed supplier, and vet officer visits for ongoing batches.</p>
+            </div>
+            <button class="btn btn-primary open-modal-btn" data-modal="modal-visit">
+              <i class="fa-solid fa-plus"></i> Add Visit
+            </button>
+          </div>
+
+          <div class="panel-card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Visit Date</th>
+                    <th>Visitor Name</th>
+                    <th>Designation</th>
+                    <th>Assigned Batch</th>
+                    <th>Visitor Feedbacks & Notes</th>
+                    <th>Satisfaction Status</th>
+                  </tr>
+                </thead>
+                <tbody id="visits-table-tbody">
+                  <!-- Dynamic Visit Rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- 4. MEDICINE                                                      -->
+        <!-- ================================================================ -->
+        <section class="tab-panel" id="tab-medicine">
+          <div class="page-title-row">
+            <div>
+              <h2><i class="fa-solid fa-pills"></i> 4. Medicine & Vaccination Tracker</h2>
+              <p>Manage poultry medications, bill records, liquid stock (in Liters), and vaccination schedules.</p>
+            </div>
+            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+              <button class="btn btn-primary-sm open-modal-btn" data-modal="modal-medicine-details">
+                <i class="fa-solid fa-file-invoice"></i> Add Medicine Details
+              </button>
+              <button class="btn btn-secondary open-modal-btn" data-modal="modal-medicine">
+                <i class="fa-solid fa-plus"></i> Add New Stock
+              </button>
+            </div>
+          </div>
+
+          <!-- Medicine Stock Table -->
+          <div class="panel-card margin-bottom">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-boxes-stacked"></i> Medicine Stock Inventory</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Medicine Name</th>
+                    <th>Target Batch / Type</th>
+                    <th>Stock Quantity</th>
+                    <th>Dosage Unit</th>
+                    <th>Expiry Date</th>
+                    <th>Stock Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="medicine-table-tbody">
+                  <!-- Dynamic Rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Medicine Details & Bill Log Table (Date, Bill No, Particulars, Quantity in Liters) -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-file-invoice-dollar"></i> Medicine Details & Bill Log (Quantity in Liters)</h3>
+              <button class="btn btn-primary-sm open-modal-btn" data-modal="modal-medicine-details">
+                <i class="fa-solid fa-plus"></i> Add Medicine Details
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Bill No</th>
+                    <th>Particulars (Medicines)</th>
+                    <th>Quantity (Liters)</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="medicine-details-table-tbody">
+                  <!-- Dynamic Medicine Details Rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- 5. FARMER EXPENDITURE                                            -->
+        <!-- ================================================================ -->
+        <section class="tab-panel" id="tab-expenditure">
+          <div class="page-title-row">
+            <div>
+              <h2><i class="fa-solid fa-wallet"></i> 5. Farmer Expenditure</h2>
+              <p>Track operational costs (chick feed, vaccines, labor, shed equipment).</p>
+            </div>
+            <button class="btn btn-primary-sm open-modal-btn" data-modal="modal-expenditure">
+              <i class="fa-solid fa-plus"></i> Log Expense
+            </button>
+          </div>
+
+          <div class="panel-card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Expense Category</th>
+                    <th>Description / Purpose</th>
+                    <th>Vendor / Paid To</th>
+                    <th>Amount (₹)</th>
+                    <th>Payment Status</th>
+                  </tr>
+                </thead>
+                <tbody id="expenditure-table-tbody">
+                  <!-- Dynamic Rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- 6. HISTORY                                                       -->
+        <!-- ================================================================ -->
+        <section class="tab-panel" id="tab-history">
+          <div class="page-title-row">
+            <div>
+              <h2><i class="fa-solid fa-clock-rotate-left"></i> 6. History & Activity Log</h2>
+              <p>Full chronological audit log of all ChickCheck activities.</p>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date & Time</th>
+                    <th>Module</th>
+                    <th>Action Summary</th>
+                    <th>Reference Code</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="history-table-tbody">
+                  <!-- Dynamic Rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- MODALS SYSTEM -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    
+    <!-- Modal: Start a New Batch -->
+    <div class="modal-card hidden" id="modal-batch">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-boxes-stacked"></i> Start a New Batch</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="form-add-batch">
+        <div class="form-group">
+          <label>Batch RFQ Code (Auto-Generated by ChickCheck)</label>
+          <input type="text" id="auto-batch-rfq" class="readonly-input" readonly>
+        </div>
+        <div class="form-group">
+          <label>Batch Name <span class="req">*</span></label>
+          <input type="text" id="batch-name-input" placeholder="e.g. Broiler Flock Batch #1" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Chick Count / Quantity <span class="req">*</span></label>
+            <input type="number" id="batch-count" placeholder="1000" required>
+          </div>
+          <div class="form-group half">
+            <label>Cycle Duration</label>
+            <input type="text" value="40 Days Fixed Cycle" readonly class="readonly-input">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Location / Shed Number</label>
+            <input type="text" id="batch-location" placeholder="Shed A1 / Brooder House 2">
+          </div>
+          <div class="form-group half">
+            <label>Initial Feed Delivered (Bags)</label>
+            <input type="number" id="batch-initial-bags" placeholder="50" value="50">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Start 40-Day Batch</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal: Add Visit (With Name Validation, Designation Dropdown, Batch Select & Satisfaction) -->
+    <div class="modal-card hidden" id="modal-visit">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-user-doctor"></i> Add Visit</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="form-add-visit">
+        <div class="form-group">
+          <label>Visit Date (Select Date & Year) <span class="req">*</span></label>
+          <input type="date" id="visit-date" required>
+        </div>
+
+        <div class="form-group">
+          <label>Visitor Name (Letters & spaces only) <span class="req">*</span></label>
+          <input type="text" id="visit-visitor-name" placeholder="e.g. Rajesh Sharma" required>
+          <span class="error-msg hidden" id="err-visitor-name">Numbers and special characters are not allowed</span>
+        </div>
+
+        <div class="form-group">
+          <label>Designation <span class="req">*</span></label>
+          <select id="visit-designation-select" required>
+            <option value="">-- Select Designation --</option>
+            <option value="Supervisor">Supervisor</option>
+            <option value="Chick Distributer">Chick Distributer</option>
+            <option value="Feed Supplier">Feed Supplier</option>
+            <option value="Chick Uplifters">Chick Uplifters</option>
+            <option value="Company Owner">Company Owner</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Assigned Batch <span class="req">*</span></label>
+          <select id="visit-batch-select" required>
+            <!-- Dynamically populated with ongoing active batches & dull completed batches -->
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Feedbacks <span class="req">*</span></label>
+          <textarea id="visit-feedback-text" rows="3" placeholder="Enter visitor feedback and observations..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Status <span class="req">*</span></label>
+          <select id="visit-satisfaction-status" required>
+            <option value="Satisfied">Satisfied</option>
+            <option value="Unsatisfied">Unsatisfied</option>
+          </select>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Visit</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal: Log Daily Record Row Entry -->
+    <div class="modal-card hidden" id="modal-log-day">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-pen-to-square"></i> Update Daily Flock Entry (<span id="modal-day-label">Day 1</span>)</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="form-log-day">
+        <input type="hidden" id="log-day-index">
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Daily Mortality Count</label>
+            <input type="number" id="input-day-mortality" placeholder="0" value="0">
+          </div>
+          <div class="form-group half">
+            <label>Actual Feed Intake (g/chick)</label>
+            <input type="number" id="input-day-feed-actual" placeholder="e.g. 15">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Actual FCR</label>
+            <input type="number" step="0.01" id="input-day-fcr-actual" placeholder="e.g. 1.25">
+          </div>
+          <div class="form-group half">
+            <label>Bags Consumed Today</label>
+            <input type="number" step="0.5" id="input-day-bags-consumed" placeholder="e.g. 2">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Bags Delivered Today (Optional)</label>
+          <input type="number" id="input-day-bags-delivered" placeholder="0" value="0">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Daily Entry</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal: Add Medicine -->
+    <div class="modal-card hidden" id="modal-medicine">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-pills"></i> Add New Medicine Stock</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="form-add-medicine">
+        <div class="form-group">
+          <label>Medicine / Vaccine Name <span class="req">*</span></label>
+          <input type="text" id="med-name" placeholder="Amoxicillin Soluble / Newcastle Vaccine" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Quantity Stock</label>
+            <input type="number" id="med-stock" placeholder="50" required>
+          </div>
+          <div class="form-group half">
+            <label>Dosage Unit</label>
+            <input type="text" id="med-unit" placeholder="Vials / Sackets" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Target Batch</label>
+          <input type="text" id="med-target" placeholder="Batch #B-101">
+        </div>
+        <div class="form-group">
+          <label>Expiry Date</label>
+          <input type="date" id="med-expiry" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Medicine</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal: Add Medicine Details (Date, Bill No, Particulars Dropdown/Custom & Quantity in Liters) -->
+    <div class="modal-card hidden" id="modal-medicine-details" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-file-invoice"></i> Add Medicine Details & Bill Log</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="form-add-medicine-details">
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Date <span class="req">*</span></label>
+            <input type="date" id="med-detail-date" required>
+          </div>
+          <div class="form-group half">
+            <label>Bill No <span class="req">*</span></label>
+            <input type="text" id="med-detail-bill-no" placeholder="e.g. BILL-2026-104" required>
+          </div>
+        </div>
+
+        <!-- Particulars & Quantity in Liters Builder Card -->
+        <div class="form-group" style="background: var(--bg-input); padding: 1rem; border-radius: var(--radius-md); border: 1.5px dashed var(--border-light);">
+          <label style="font-weight: 700; color: var(--flamingo-primary);"><i class="fa-solid fa-flask"></i> Particulars & Liquid Quantity (Liters)</label>
+          
+          <div class="form-row" style="margin-top: 0.5rem;">
+            <div class="form-group half">
+              <label>Select Particular <span class="req">*</span></label>
+              <select id="med-particular-select">
+                <option value="">-- Select Particular --</option>
+                <option value="Amoxicillin Oral Liquid">Amoxicillin Oral Liquid</option>
+                <option value="Vitamin AD3E Liquid">Vitamin AD3E Liquid</option>
+                <option value="Liver Tonic Solution">Liver Tonic Solution</option>
+                <option value="Shed Sanitizer & Disinfectant">Shed Sanitizer & Disinfectant</option>
+                <option value="Electrolyte & Mineral Solution">Electrolyte & Mineral Solution</option>
+                <option value="Gumboro Immunizer Liquid">Gumboro Immunizer Liquid</option>
+                <option value="CUSTOM_OPTION">+ Add Custom Particular (Text Input)</option>
+              </select>
+            </div>
+            <div class="form-group half">
+              <label>Quantity (in Liters) <span class="req">*</span></label>
+              <input type="number" step="0.1" min="0.1" id="med-particular-qty" placeholder="e.g. 2.5">
+            </div>
+          </div>
+
+          <!-- Hidden Custom Particular Text Input Field -->
+          <div class="form-group hidden" id="custom-particular-group" style="margin-top: 0.4rem;">
+            <label>Custom Particular Name <span class="req">*</span></label>
+            <input type="text" id="med-custom-particular-input" placeholder="Enter custom medicine particular name...">
+          </div>
+
+          <button type="button" class="btn btn-secondary" id="btn-add-particular-item" style="margin-top: 0.6rem; width: 100%; justify-content: center;">
+            <i class="fa-solid fa-plus-circle"></i> Add Particular to Bill List
+          </button>
+        </div>
+
+        <!-- Selected Particulars List -->
+        <div class="form-group">
+          <label>Selected Particulars List (Quantity in Liters) <span class="req">*</span></label>
+          <div id="particulars-added-list" class="particulars-chip-container">
+            <span style="color: var(--text-muted); font-size: 0.82rem; font-style: italic;">No particulars added yet. Select or type a particular above and click "+ Add Particular to Bill List".</span>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Medicine Details</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal: Log Expenditure -->
+    <div class="modal-card hidden" id="modal-expenditure">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-wallet"></i> Log Farmer Expense</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="form-add-expenditure">
+        <div class="form-group">
+          <label>Expense Category <span class="req">*</span></label>
+          <select id="exp-category" required>
+            <option value="Chick Feed & Fodder">Chick Feed & Fodder</option>
+            <option value="Medicine & Vaccines">Medicine & Vaccines</option>
+            <option value="Labor & Shed Wages">Labor & Shed Wages</option>
+            <option value="Equipment & Maintenance">Equipment & Maintenance</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Description / Details</label>
+          <input type="text" id="exp-desc" placeholder="e.g. 50 Bags Broiler Starter Feed" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Amount (₹) <span class="req">*</span></label>
+            <input type="number" id="exp-amount" placeholder="12000" required>
+          </div>
+          <div class="form-group half">
+            <label>Vendor / Paid To</label>
+            <input type="text" id="exp-vendor" placeholder="GreenFeeds Poultry Supply">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Log Expense</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
