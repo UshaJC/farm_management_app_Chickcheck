@@ -352,54 +352,71 @@
             </div>
           </div>
 
-          <!-- Medicine Stock Table -->
-          <div class="panel-card margin-bottom">
-            <div class="panel-header">
-              <h3><i class="fa-solid fa-boxes-stacked"></i> Medicine Stock Inventory</h3>
-            </div>
-            <div class="table-responsive">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Medicine Name</th>
-                    <th>Target Batch / Type</th>
-                    <th>Stock Quantity</th>
-                    <th>Dosage Unit</th>
-                    <th>Expiry Date</th>
-                    <th>Stock Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="medicine-table-tbody">
-                  <!-- Dynamic Rows -->
-                </tbody>
-              </table>
+          <!-- SUB-TAB TOGGLE BUTTONS -->
+          <div class="sub-nav-bar margin-bottom">
+            <button class="sub-tab-btn active" data-subtab="subtab-med-inventory">
+              <i class="fa-solid fa-boxes-stacked"></i> Medicine Stock Inventory
+            </button>
+            <button class="sub-tab-btn" data-subtab="subtab-med-details">
+              <i class="fa-solid fa-file-invoice-dollar"></i> Medicine Details & Bill Log
+            </button>
+          </div>
+
+          <!-- SUB-TAB CONTENT 1: MEDICINE STOCK INVENTORY -->
+          <div class="sub-tab-content active" id="subtab-med-inventory">
+            <div class="panel-card">
+              <div class="panel-header">
+                <h3><i class="fa-solid fa-boxes-stacked"></i> Medicine Stock Inventory</h3>
+                <button class="btn btn-primary-sm open-modal-btn" data-modal="modal-medicine">
+                  <i class="fa-solid fa-plus"></i> Add New Stock
+                </button>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Medicine Name</th>
+                      <th>Target Batch / Type</th>
+                      <th>Stock Quantity</th>
+                      <th>Dosage Unit</th>
+                      <th>Expiry Date</th>
+                      <th>Stock Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="medicine-table-tbody">
+                    <!-- Dynamic Rows -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
-          <!-- Medicine Details & Bill Log Table (Date, Bill No, Particulars, Quantity in Liters) -->
-          <div class="panel-card">
-            <div class="panel-header">
-              <h3><i class="fa-solid fa-file-invoice-dollar"></i> Medicine Details & Bill Log (Quantity in Liters)</h3>
-              <button class="btn btn-primary-sm open-modal-btn" data-modal="modal-medicine-details">
-                <i class="fa-solid fa-plus"></i> Add Medicine Details
-              </button>
-            </div>
-            <div class="table-responsive">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Bill No</th>
-                    <th>Particulars (Medicines)</th>
-                    <th>Quantity (Liters)</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="medicine-details-table-tbody">
-                  <!-- Dynamic Medicine Details Rows -->
-                </tbody>
-              </table>
+          <!-- SUB-TAB CONTENT 2: MEDICINE DETAILS & BILL LOG -->
+          <div class="sub-tab-content hidden" id="subtab-med-details">
+            <div class="panel-card">
+              <div class="panel-header">
+                <h3><i class="fa-solid fa-file-invoice-dollar"></i> Medicine Details & Bill Log (Quantity in Liters)</h3>
+                <button class="btn btn-primary-sm open-modal-btn" data-modal="modal-medicine-details">
+                  <i class="fa-solid fa-plus"></i> Add Medicine Details
+                </button>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Bill No</th>
+                      <th>Particulars (Medicines)</th>
+                      <th>Quantity (Liters)</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="medicine-details-table-tbody">
+                    <!-- Dynamic Medicine Details Rows -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </section>

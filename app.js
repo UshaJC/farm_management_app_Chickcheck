@@ -586,6 +586,27 @@ document.addEventListener('DOMContentLoaded', () => {
       item.addEventListener('click', () => switchTab(item.dataset.tab));
     });
 
+    // Sub-Tab Navigation Toggle Handler (e.g. Medicine Stock Inventory vs Medicine Details & Bill Log)
+    document.body.addEventListener('click', (e) => {
+      const subTabBtn = e.target.closest('.sub-tab-btn');
+      if (subTabBtn) {
+        const targetSubtab = subTabBtn.dataset.subtab;
+        
+        document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+        subTabBtn.classList.add('active');
+
+        document.querySelectorAll('.sub-tab-content').forEach(c => {
+          if (c.id === targetSubtab) {
+            c.classList.add('active');
+            c.classList.remove('hidden');
+          } else {
+            c.classList.remove('active');
+            c.classList.add('hidden');
+          }
+        });
+      }
+    });
+
     document.body.addEventListener('click', (e) => {
       // Open ledger from dashboard card
       const openLedgerBtn = e.target.closest('.open-batch-ledger-btn');

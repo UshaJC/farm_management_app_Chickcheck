@@ -807,6 +807,55 @@ select option:disabled {
   transform: scale(1.2);
 }
 
+/* Sub-Tab Navigation Toggle Bar */
+.sub-nav-bar {
+  display: flex;
+  gap: 0.6rem;
+  background: var(--bg-card);
+  padding: 0.45rem;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border-light);
+  width: fit-content;
+  max-width: 100%;
+  box-shadow: var(--shadow-sm);
+}
+
+.sub-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.3rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sub-tab-btn:hover {
+  color: var(--flamingo-primary);
+  background: var(--flamingo-light);
+}
+
+.sub-tab-btn.active {
+  background: linear-gradient(135deg, var(--flamingo-primary), var(--flamingo-hover));
+  color: #FFFFFF;
+  box-shadow: 0 4px 15px var(--flamingo-glow);
+}
+
+.sub-tab-content {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.sub-tab-content.active {
+  display: block;
+}
+
 /* Buttons System */
 .btn {
   display: inline-flex;
