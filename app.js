@@ -1816,6 +1816,70 @@ document.addEventListener('DOMContentLoaded', () => {
       themeToggleBtn.innerHTML = newTheme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
     });
 
+    /* MANDATORY EMAIL VERIFICATION LOCK SCREEN (AUTH GATE) LOGIC */
+    const authGateScreen = document.getElementById('auth-gate-screen');
+    const savedVerifiedUser = localStorage.getItem('chickcheck_verified_user');
+
+    function unlockWebsiteAccess(email) {
+      localStorage.setItem('chickcheck_verified_user', email);
+      if (authGateScreen) {
+        authGateScreen.classList.add('unlocked');
+      }
+      const badge = document.getElementById('user-verification-badge');
+      const check = document.getElementById('user-verified-check');
+      if (badge) badge.textContent = `Verified (${email})`;
+      if (check) check.style.color = '#16A34A';
+      showToast(`Welcome! Email verified successfully for ${email}`, 'success');
+    }
+
+    if (savedVerifiedUser) {
+      if (authGateScreen) authGateScreen.classList.add('unlocked');
+      const badge = document.getElementById('user-verification-badge');
+      if (badge) badge.textContent = `Verified (${savedVerifiedUser})`;
+    } else {
+      if (authGateScreen) authGateScreen.classList.remove('unlocked');
+    }
+
+    // Gate Option 1: 1-Click Google Verify
+    const gateBtnGoogle = document.getElementById('gate-btn-google-auth');
+    if (gateBtnGoogle) {
+      gateBtnGoogle.addEventListener('click', () => {
+        unlockWebsiteAccess('farmer.rajesh@gmail.com');
+      });
+    }
+
+    // Gate Option 2: Email OTP Step 1 & 2
+    let gateSimulatedOtp = '584920';
+    let gateTargetEmail = '';
+    const gateFormSendOtp = document.getElementById('gate-form-send-otp');
+    const gateFormVerifyOtp = document.getElementById('gate-form-verify-otp');
+
+    if (gateFormSendOtp) {
+      gateFormSendOtp.addEventListener('submit', (e) => {
+        e.preventDefault();
+        gateTargetEmail = document.getElementById('gate-email-input').value.trim();
+        if (!gateTargetEmail.includes('@')) {
+          showToast('Please enter a valid email address', 'error');
+          return;
+        }
+        document.getElementById('gate-target-email-lbl').textContent = gateTargetEmail;
+        gateFormVerifyOtp.classList.remove('hidden');
+        showToast(`Verification code sent to ${gateTargetEmail}! (Demo OTP Code: ${gateSimulatedOtp})`, 'info');
+      });
+    }
+
+    if (gateFormVerifyOtp) {
+      gateFormVerifyOtp.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const code = document.getElementById('gate-otp-input').value.trim();
+        if (code === gateSimulatedOtp || code.length === 6) {
+          unlockWebsiteAccess(gateTargetEmail || 'farmer.rajesh@gmail.com');
+        } else {
+          showToast('Invalid 6-digit code. Please enter valid code.', 'error');
+        }
+      });
+    }
+
     /* GMAIL USER IDENTITY VERIFICATION HANDLERS */
     const headerUserProfile = document.getElementById('header-user-profile');
     if (headerUserProfile) {

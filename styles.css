@@ -1765,3 +1765,113 @@ input:focus, select:focus {
   transform: translate(-50%, -120%);
   white-space: nowrap;
 }
+
+/* MANDATORY AUTH GATE OVERLAY (LOCK SCREEN BEFORE WEBSITE ACCESS) */
+.auth-gate-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(30, 20, 24, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  transition: opacity var(--transition-fast);
+}
+
+.auth-gate-overlay.unlocked {
+  display: none !important;
+}
+
+.auth-gate-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-card-solid);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.auth-brand-header {
+  background: linear-gradient(135deg, rgba(255, 94, 126, 0.12), rgba(244, 214, 153, 0.25)), var(--bg-card);
+  padding: 1.6rem;
+  text-align: center;
+  border-bottom: 1px dashed var(--border-light);
+}
+
+.auth-brand-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  box-shadow: 0 4px 15px var(--flamingo-glow);
+  margin-bottom: 0.6rem;
+}
+
+.auth-brand-header h2 {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.15rem;
+}
+
+.auth-brand-header p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.auth-gate-body {
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--flamingo-primary);
+  background: var(--flamingo-light);
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-pill);
+  margin: 0 auto;
+}
+
+.auth-instructions {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin: 0.4rem 0;
+}
+
+.auth-divider hr {
+  flex: 1;
+  border: none;
+  border-top: 1px dashed var(--border-light);
+}
