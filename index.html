@@ -14,6 +14,9 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#FF5E7E">
+  <link rel="apple-touch-icon" href="chickcheck_logo.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-theme="light">
@@ -21,14 +24,14 @@
   <div class="app-layout">
 
     <!-- ==================================================================== -->
-    <!-- CHICKCHECK SIDE NAVIGATION MENU                                      -->
+    <!-- CHICKCHECK SEPARATE SIDEBAR & MENU LAYOUT                            -->
     <!-- ==================================================================== -->
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar-wrapper" id="sidebar">
       
-      <!-- Brand Header -->
-      <div class="sidebar-brand">
+      <!-- App Name Brand Card (Separate Header Box) -->
+      <div class="sidebar-brand-card">
         <div class="brand-logo">
-          <i class="fa-solid fa-egg"></i>
+          <img src="chickcheck_logo.png" alt="ChickCheck Logo" class="brand-logo-img">
         </div>
         <div class="brand-text">
           <span class="brand-name">ChickCheck</span>
@@ -39,59 +42,46 @@
         </button>
       </div>
 
-      <!-- Navigation Links -->
-      <nav class="sidebar-menu">
-        <div class="menu-label">ChickCheck Menu</div>
+      <!-- Side Menu Navigation Card (Separate Standalone Menu Panel) -->
+      <nav class="sidebar-menu-card">
+        <div class="menu-label">Menu Navigation</div>
         
-        <!-- 1. Dashboard -->
+        <!-- Dashboard -->
         <button class="menu-item active" data-tab="tab-dashboard">
           <i class="fa-solid fa-chart-pie menu-icon"></i>
-          <span class="menu-text">1. Dashboard</span>
+          <span class="menu-text">Dashboard</span>
         </button>
 
-        <!-- 2. New Batch -->
+        <!-- New Batch -->
         <button class="menu-item" data-tab="tab-batches">
           <i class="fa-solid fa-boxes-stacked menu-icon"></i>
-          <span class="menu-text">2. New Batch</span>
-          <span class="menu-badge" id="badge-batches-count">0</span>
+          <span class="menu-text">New Batch</span>
         </button>
 
-        <!-- 3. Visits -->
+        <!-- Visits -->
         <button class="menu-item" data-tab="tab-visits">
           <i class="fa-solid fa-user-doctor menu-icon"></i>
-          <span class="menu-text">3. Visits</span>
-          <span class="menu-badge" id="badge-visits-count">0</span>
+          <span class="menu-text">Visits</span>
         </button>
 
-        <!-- 4. Medicine -->
+        <!-- Medicine -->
         <button class="menu-item" data-tab="tab-medicine">
           <i class="fa-solid fa-pills menu-icon"></i>
-          <span class="menu-text">4. Medicine</span>
-          <span class="menu-badge" id="badge-medicine-count">0</span>
+          <span class="menu-text">Medicine</span>
         </button>
 
-        <!-- 5. Farmer Expenditure -->
+        <!-- Farmer Expenditure -->
         <button class="menu-item" data-tab="tab-expenditure">
           <i class="fa-solid fa-wallet menu-icon"></i>
-          <span class="menu-text">5. Farmer Expenditure</span>
+          <span class="menu-text">Farmer Expenditure</span>
         </button>
 
-        <!-- 6. History -->
+        <!-- History -->
         <button class="menu-item" data-tab="tab-history">
           <i class="fa-solid fa-clock-rotate-left menu-icon"></i>
-          <span class="menu-text">6. History</span>
-          <span class="menu-badge" id="badge-history-count">0</span>
+          <span class="menu-text">History</span>
         </button>
       </nav>
-
-      <!-- Sidebar User Footer -->
-      <div class="sidebar-user-card">
-        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ChickCheckFarmer" alt="Farmer Avatar" class="user-avatar">
-        <div class="user-info">
-          <span class="user-name">Rajesh Kumar</span>
-          <span class="user-role">ChickCheck Admin</span>
-        </div>
-      </div>
 
     </aside>
 
@@ -110,13 +100,19 @@
         </div>
 
         <div class="header-actions">
-          <button class="btn btn-primary-sm open-modal-btn" data-modal="modal-batch">
-            <i class="fa-solid fa-plus"></i> Start a New Batch
-          </button>
-          
           <button class="btn btn-icon" id="theme-toggle-btn" title="Toggle Light/Dark Theme">
             <i class="fa-solid fa-moon"></i>
           </button>
+
+          <!-- Top-Right User Profile Badge -->
+          <!-- Top-Right User Profile Badge (Click to Verify Gmail) -->
+          <div class="header-user-profile" id="header-user-profile" style="cursor:pointer;" title="Click to verify Gmail Identity">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ChickCheckFarmer" alt="Rajesh Kumar Avatar" class="header-avatar">
+            <div class="header-user-info">
+              <span class="header-user-name">Rajesh Kumar <i class="fa-solid fa-circle-check" style="color:#16A34A; font-size:0.8rem;" id="user-verified-check"></i></span>
+              <span class="header-user-role" id="user-verification-badge">Verified via Gmail</span>
+            </div>
+          </div>
         </div>
 
       </header>
@@ -142,87 +138,139 @@
           
           <div class="welcome-banner">
             <div class="banner-text">
-              <h1>Welcome to ChickCheck Dashboard, Rajesh! 🐣</h1>
-              <p>Manage active ongoing poultry batches, visitor inspections, medicine alerts, and expenditures.</p>
-            </div>
-            <div class="banner-actions">
-              <button class="btn btn-primary open-modal-btn" data-modal="modal-batch">
-                <i class="fa-solid fa-plus"></i> Start a New Batch
-              </button>
+              <h1><img src="chick_icon.jpg" alt="Chick Icon" class="welcome-chick-icon"> Welcome to ChickCheck, Rajesh!</h1>
             </div>
           </div>
 
-          <!-- Quick Metrics Grid -->
-          <div class="metrics-grid">
+          <!-- Hero Grid: Left 2x2 Metric Stack + Right Active Ongoing Batches Section -->
+          <div class="dashboard-hero-grid margin-bottom">
             
-            <div class="metric-card" data-target="tab-batches">
-              <div class="metric-icon flamingo"><i class="fa-solid fa-boxes-stacked"></i></div>
-              <div class="metric-info">
-                <span class="metric-val" id="metric-total-batches">0 Ongoing</span>
-                <span class="metric-label">2. New Batch</span>
+            <!-- Left Stacked Metric Cards (Top: Days & Mortality; Below: Remaining Feed Bags & Farmer Expenditure) -->
+            <div class="metrics-stacked-container">
+              
+              <!-- Top Row: Ongoing Batch Days & Chick Mortality Count -->
+              <div class="metrics-row-top">
+                <!-- 1st Widget: No. of Days of Ongoing Batch -->
+                <div class="metric-card" data-target="tab-batches">
+                  <div class="metric-icon image-icon"><img src="calendar_icon.jpg" alt="Ongoing Batch Days Calendar Icon" class="metric-custom-img"></div>
+                  <div class="metric-info">
+                    <span class="metric-val" id="metric-chick-days">Day 0</span>
+                    <span class="metric-label">1. Ongoing Batch Days</span>
+                  </div>
+                </div>
+
+                <!-- 2nd Widget: Chick Mortality Number -->
+                <div class="metric-card card-mortality" data-target="tab-batches">
+                  <div class="metric-icon image-icon"><img src="mortality_icon.jpg" alt="Chick Mortality Icon" class="metric-custom-img"></div>
+                  <div class="metric-info">
+                    <span class="metric-val" id="metric-chick-mortality" style="color:#EF4444">0 Chicks</span>
+                    <span class="metric-label">2. Chick Mortality Count</span>
+                  </div>
+                </div>
               </div>
+
+              <!-- Below Row: Remaining Feed Bags & Farmer Expenditure -->
+              <div class="metrics-row-below">
+                <!-- 3rd Widget: Remaining Feed Bags -->
+                <div class="metric-card card-feed" data-target="tab-batches">
+                  <div class="metric-icon image-icon"><img src="feedbag_icon.jpg" alt="Remaining Feed Bags Icon" class="metric-custom-img"></div>
+                  <div class="metric-info">
+                    <span class="metric-val" id="metric-remaining-bags" style="color:#16A34A">0 Bags</span>
+                    <span class="metric-label">3. Remaining Feed Bags</span>
+                  </div>
+                </div>
+
+                <!-- 4th Widget: Total Farmer Expenditure -->
+                <div class="metric-card" data-target="tab-expenditure">
+                  <div class="metric-icon image-icon"><img src="expenditure_icon.jpg" alt="Farmer Expenditure Icon" class="metric-custom-img"></div>
+                  <div class="metric-info">
+                    <span class="metric-val" id="metric-total-expenditure">₹ 0</span>
+                    <span class="metric-label">4. Farmer Expenditure</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
-            <div class="metric-card" data-target="tab-visits">
-              <div class="metric-icon custard"><i class="fa-solid fa-user-doctor"></i></div>
-              <div class="metric-info">
-                <span class="metric-val" id="metric-upcoming-visits">0 Scheduled</span>
-                <span class="metric-label">3. Visits</span>
-              </div>
-            </div>
-
-            <div class="metric-card" data-target="tab-medicine">
-              <div class="metric-icon flamingo"><i class="fa-solid fa-pills"></i></div>
-              <div class="metric-info">
-                <span class="metric-val" id="metric-low-medicine">0 Alerts</span>
-                <span class="metric-label">4. Medicine</span>
-              </div>
-            </div>
-
-            <div class="metric-card" data-target="tab-expenditure">
-              <div class="metric-icon custard"><i class="fa-solid fa-wallet"></i></div>
-              <div class="metric-info">
-                <span class="metric-val" id="metric-total-expenditure">₹ 0</span>
-                <span class="metric-label">5. Farmer Expenditure</span>
+            <!-- Right Column: Active Ongoing Batches Container -->
+            <div class="dashboard-ongoing-section">
+              <div class="ongoing-batches-grid" id="dash-ongoing-batches-container">
+                <!-- Dynamically populated -->
               </div>
             </div>
 
           </div>
 
-          <!-- ONGOING BATCHES DASHBOARD CARDS CONTAINER -->
-          <div class="dashboard-ongoing-section margin-bottom">
-            <div class="panel-header">
-              <h3><i class="fa-solid fa-fire-flame-curved"></i> Active Ongoing Batches</h3>
-              <button class="btn btn-primary-sm open-modal-btn" data-modal="modal-batch">
-                <i class="fa-solid fa-plus"></i> Start New Batch
-              </button>
+          <!-- AUTOMATED DAILY CHICKEN STOCK MARKET PRICE TERMINAL SECTION -->
+          <div class="panel-card stock-market-panel margin-bottom">
+            
+            <div class="stock-header-ticker">
+              <div class="stock-title-badge">
+                <h3 style="font-family:var(--font-heading); font-size:1.15rem; font-weight:800; display:flex; align-items:center; gap:0.5rem; margin:0;">
+                  <i class="fa-solid fa-chart-line" style="color:var(--flamingo-primary);"></i> Daily Chicken Market Stock Graph
+                </h3>
+                <span class="stock-badge-pill">
+                  <span class="stock-live-dot"></span> AUTOMATED DAILY MANDI FEED
+                </span>
+              </div>
+
+              <!-- Stock Time Range Selector Buttons (7D / 15D / 30D) -->
+              <div class="stock-range-selector">
+                <button class="stock-range-btn active" data-range="7">7 Days</button>
+                <button class="stock-range-btn" data-range="15">15 Days</button>
+                <button class="stock-range-btn" data-range="30">30 Days</button>
+              </div>
             </div>
 
-            <div class="ongoing-batches-grid" id="dash-ongoing-batches-container">
-              <!-- Dynamically populated -->
+            <!-- Live Ticker Stats Row -->
+            <div class="stock-stats-ticker-bar">
+              <div class="ticker-stat-box">
+                <span class="ticker-label">Today Rate</span>
+                <span class="ticker-value" id="stock-today-price" style="color:#16A34A;">₹ 0.00 / kg</span>
+              </div>
+              <div class="ticker-stat-box">
+                <span class="ticker-label">24H Change</span>
+                <span class="ticker-value" id="stock-24h-change">+₹ 0.00 (0%)</span>
+              </div>
+              <div class="ticker-stat-box">
+                <span class="ticker-label">Period High</span>
+                <span class="ticker-value" id="stock-period-high" style="color:#16A34A;">₹ 0.00</span>
+              </div>
+              <div class="ticker-stat-box">
+                <span class="ticker-label">Period Low</span>
+                <span class="ticker-value" id="stock-period-low" style="color:#EF4444;">₹ 0.00</span>
+              </div>
+              <div class="ticker-stat-box">
+                <span class="ticker-label">Market Volatility</span>
+                <span class="ticker-value" id="stock-volatility" style="color:#D97706;">Moderate</span>
+              </div>
             </div>
-          </div>
 
-          <!-- Recent Activity Table -->
-          <div class="panel-card">
-            <div class="panel-header">
-              <h3><i class="fa-solid fa-clock-rotate-left"></i> 6. ChickCheck History Log</h3>
+            <!-- Stock Market Canvas Graph Wrapper -->
+            <div class="stock-chart-wrapper">
+              <canvas id="stock-chart-canvas"></canvas>
+              <div class="stock-tooltip" id="stock-chart-tooltip"></div>
             </div>
-            <div class="table-responsive">
+
+            <!-- Daily Price Feed History Table -->
+            <div class="table-responsive styled-scrollbar">
               <table class="data-table">
                 <thead>
                   <tr>
-                    <th>Time</th>
-                    <th>Module</th>
-                    <th>Description</th>
-                    <th>Logged By</th>
+                    <th>Date</th>
+                    <th>Market Mandi Location</th>
+                    <th>Automated Price (₹/kg)</th>
+                    <th>Day-on-Day Change</th>
+                    <th>Market Trend</th>
+                    <th>Automated Mandi Factors</th>
                   </tr>
                 </thead>
-                <tbody id="dash-activity-tbody">
-                  <!-- Dynamic Rows -->
+                <tbody id="stock-price-table-tbody">
+                  <!-- Dynamically populated daily feeds -->
                 </tbody>
               </table>
             </div>
+
           </div>
 
         </section>
@@ -233,7 +281,7 @@
         <section class="tab-panel" id="tab-batches">
           <div class="page-title-row">
             <div>
-              <h2><i class="fa-solid fa-boxes-stacked"></i> 2. Ongoing Batches & 40-Day Performance Ledger</h2>
+              <h2><i class="fa-solid fa-boxes-stacked"></i> Ongoing Batches</h2>
               <p>Monitor mortality, feed intake, FCR, and feed bag inventory for your active flock.</p>
             </div>
             <button class="btn btn-primary open-modal-btn" data-modal="modal-batch">
@@ -260,21 +308,21 @@
           <!-- 40-Day Multi-Level Performance Ledger Panel -->
           <div class="panel-card" id="batch-tracking-panel">
             <div class="panel-header">
-              <h3 id="tracker-batch-title"><i class="fa-solid fa-calendar-days"></i> 40-Day Daily Record Grid</h3>
-              <span class="tag tag-custard">40 Days Fixed Cycle</span>
+              <h3 id="tracker-batch-title"><i class="fa-solid fa-calendar-days"></i> Daily Performance Record Grid</h3>
+              <span class="tag tag-custard" id="tracker-cycle-tag">Day 1 of 40</span>
             </div>
 
-            <div class="table-responsive">
+            <div class="table-responsive styled-scrollbar">
               <table class="data-table tracking-table multi-header-table" id="day-40-tracking-table">
                 <thead>
                   <tr>
-                    <th rowspan="2" style="min-width: 110px;">Date</th>
-                    <th rowspan="2" style="min-width: 110px;">Age of Chick</th>
-                    <th colspan="3" class="th-group th-flamingo">Mortality</th>
-                    <th colspan="2" class="th-group th-custard">Feed Intake (g/chick)</th>
-                    <th colspan="2" class="th-group th-flamingo">FCR</th>
-                    <th colspan="4" class="th-group th-custard">Feed In Bags</th>
-                    <th rowspan="2" style="min-width: 100px;">Actions</th>
+                    <th rowspan="2" class="th-main-col">Date</th>
+                    <th rowspan="2" class="th-main-col">Age of Chick</th>
+                    <th colspan="3" class="th-group th-mortality"><i class="fa-solid fa-skull"></i> Chick Mortality</th>
+                    <th colspan="2" class="th-group th-feed-intake"><i class="fa-solid fa-bowl-food"></i> Feed Intake (g/chick)</th>
+                    <th colspan="2" class="th-group th-fcr"><i class="fa-solid fa-chart-line"></i> FCR Ratio</th>
+                    <th colspan="4" class="th-group th-feed-bags"><i class="fa-solid fa-wheat-awn"></i> Feed Bags Stock</th>
+                    <th rowspan="2" class="th-main-col">Actions</th>
                   </tr>
                   <tr>
                     <th class="th-sub">Daily</th>
@@ -291,25 +339,41 @@
                   </tr>
                 </thead>
                 <tbody id="day-40-tracking-tbody">
-                  <!-- 40 Rows Generated Dynamically -->
+                  <!-- Dynamic Rows Unlocked Per Day -->
                 </tbody>
               </table>
+            </div>
+
+            <!-- Ledger Footer Controls & Cycle Extension -->
+            <div class="ledger-footer-actions" id="ledger-footer-actions" style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.2rem; flex-wrap: wrap; gap: 1rem; border-top: 1px dashed var(--border-light); padding-top: 1rem;">
+              <div class="ledger-info-note" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fa-solid fa-circle-info" style="color: var(--flamingo-primary); font-size: 1rem;"></i>
+                <span>Rows are unlocked daily as new days start. Click on the right if your flock cycle extends beyond 40 days.</span>
+              </div>
+              <button class="btn btn-primary-sm" id="extend-batch-day-btn">
+                <i class="fa-solid fa-plus-circle"></i> Add Extra Day Row (Extend Cycle)
+              </button>
             </div>
           </div>
         </section>
 
         <!-- ================================================================ -->
-        <!-- 3. VISITS (WITH ADD VISIT FORM & SATISFACTION STATUS)             -->
+        <!-- 3. VISITS (WITH ADD VISIT FORM & FEED BAG DELIVERY RECORD)       -->
         <!-- ================================================================ -->
         <section class="tab-panel" id="tab-visits">
           <div class="page-title-row">
             <div>
-              <h2><i class="fa-solid fa-user-doctor"></i> 3. Farm Visits & Field Inspections</h2>
-              <p>Log supervisor, feed supplier, and vet officer visits for ongoing batches.</p>
+              <h2><i class="fa-solid fa-user-doctor"></i> Farm Visits & Feed Delivery Records</h2>
+              <p>Log supervisor, feed supplier, and vet officer visits along with feed bag delivery counts.</p>
             </div>
-            <button class="btn btn-primary open-modal-btn" data-modal="modal-visit">
-              <i class="fa-solid fa-plus"></i> Add Visit
-            </button>
+            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+              <button class="btn btn-primary-sm open-modal-btn" data-modal="modal-feed-delivery">
+                <i class="fa-solid fa-truck-ramp-box"></i> Record Feed Delivery
+              </button>
+              <button class="btn btn-primary open-modal-btn" data-modal="modal-visit">
+                <i class="fa-solid fa-plus"></i> Add Visit
+              </button>
+            </div>
           </div>
 
           <div class="panel-card">
@@ -321,6 +385,7 @@
                     <th>Visitor Name</th>
                     <th>Designation</th>
                     <th>Assigned Batch</th>
+                    <th>Feed Bags Delivered</th>
                     <th>Visitor Feedbacks & Notes</th>
                     <th>Satisfaction Status</th>
                   </tr>
@@ -333,22 +398,12 @@
           </div>
         </section>
 
-        <!-- ================================================================ -->
-        <!-- 4. MEDICINE                                                      -->
-        <!-- ================================================================ -->
+        <!-- MEDICINE -->
         <section class="tab-panel" id="tab-medicine">
           <div class="page-title-row">
             <div>
-              <h2><i class="fa-solid fa-pills"></i> 4. Medicine & Vaccination Tracker</h2>
+              <h2><i class="fa-solid fa-pills"></i> Medicine & Vaccination Tracker</h2>
               <p>Manage poultry medications, bill records, liquid stock (in Liters), and vaccination schedules.</p>
-            </div>
-            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
-              <button class="btn btn-primary-sm open-modal-btn" data-modal="modal-medicine-details">
-                <i class="fa-solid fa-file-invoice"></i> Add Medicine Details
-              </button>
-              <button class="btn btn-secondary open-modal-btn" data-modal="modal-medicine">
-                <i class="fa-solid fa-plus"></i> Add New Stock
-              </button>
             </div>
           </div>
 
@@ -421,48 +476,115 @@
           </div>
         </section>
 
-        <!-- ================================================================ -->
-        <!-- 5. FARMER EXPENDITURE                                            -->
-        <!-- ================================================================ -->
+        <!-- FARMER EXPENDITURE & PROFIT GAIN LEDGER -->
         <section class="tab-panel" id="tab-expenditure">
           <div class="page-title-row">
             <div>
-              <h2><i class="fa-solid fa-wallet"></i> 5. Farmer Expenditure</h2>
-              <p>Track operational costs (chick feed, vaccines, labor, shed equipment).</p>
+              <h2><i class="fa-solid fa-wallet"></i> Farmer Expenditure & Profit Gain Ledger</h2>
+              <p>Track operational costs, batch settlement income, and net farmer profit.</p>
             </div>
             <button class="btn btn-primary-sm open-modal-btn" data-modal="modal-expenditure">
               <i class="fa-solid fa-plus"></i> Log Expense
             </button>
           </div>
 
-          <div class="panel-card">
-            <div class="table-responsive">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Expense Category</th>
-                    <th>Description / Purpose</th>
-                    <th>Vendor / Paid To</th>
-                    <th>Amount (₹)</th>
-                    <th>Payment Status</th>
-                  </tr>
-                </thead>
-                <tbody id="expenditure-table-tbody">
-                  <!-- Dynamic Rows -->
-                </tbody>
-              </table>
+          <!-- Top Financial Gain & Expense Metrics Grid -->
+          <div class="metrics-grid margin-bottom" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+            <div class="metric-card" style="background: linear-gradient(135deg, rgba(22, 163, 74, 0.12), rgba(244, 214, 153, 0.22)); cursor: default;">
+              <div class="metric-icon" style="background: rgba(22, 163, 74, 0.15); color: #16A34A;">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+              </div>
+              <div class="metric-info">
+                <span class="metric-val" id="exp-total-gross-gain" style="color: #16A34A;">₹ 0</span>
+                <span class="metric-label">Total Batch Gross Income</span>
+              </div>
+            </div>
+
+            <div class="metric-card" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(244, 214, 153, 0.22)); cursor: default;">
+              <div class="metric-icon" style="background: rgba(239, 68, 68, 0.15); color: #EF4444;">
+                <i class="fa-solid fa-wallet"></i>
+              </div>
+              <div class="metric-info">
+                <span class="metric-val" id="exp-total-expenses" style="color: #EF4444;">₹ 0</span>
+                <span class="metric-label">Total Farmer Expenditure</span>
+              </div>
+            </div>
+
+            <div class="metric-card" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(244, 214, 153, 0.25)); cursor: default;">
+              <div class="metric-icon" style="background: rgba(245, 158, 11, 0.2); color: #D97706;">
+                <i class="fa-solid fa-coins"></i>
+              </div>
+              <div class="metric-info">
+                <span class="metric-val" id="exp-total-net-profit" style="color: #D97706;">₹ 0</span>
+                <span class="metric-label">Net Farmer Profit</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-Tab Navigation Bar -->
+          <div class="sub-nav-bar margin-bottom">
+            <button class="sub-tab-btn active" data-subtab="subtab-expenditure-log">
+              <i class="fa-solid fa-receipt"></i> Expenditure Logs
+            </button>
+            <button class="sub-tab-btn" data-subtab="subtab-gains-ledger">
+              <i class="fa-solid fa-chart-pie"></i> Batch Settlement Gains & Profit
+            </button>
+          </div>
+
+          <!-- Sub-Tab 1: Expenditure Logs Table -->
+          <div class="sub-tab-content active" id="subtab-expenditure-log">
+            <div class="panel-card">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Expense Category</th>
+                      <th>Description / Purpose</th>
+                      <th>Vendor / Paid To</th>
+                      <th>Amount (₹)</th>
+                      <th>Payment Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="expenditure-table-tbody">
+                    <!-- Dynamic Rows -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-Tab 2: Batch Settlement Gains & Profit Table -->
+          <div class="sub-tab-content hidden" id="subtab-gains-ledger">
+            <div class="panel-card">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Date Completed</th>
+                      <th>Batch Name & RFQ</th>
+                      <th>Total Weight (kg)</th>
+                      <th>Commission (₹/kg)</th>
+                      <th>Gross Earnings (₹)</th>
+                      <th>Batch Expenditure (₹)</th>
+                      <th>Net Profit (₹)</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="gains-table-tbody">
+                    <!-- Dynamic Gains Settlement Rows -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- ================================================================ -->
-        <!-- 6. HISTORY                                                       -->
-        <!-- ================================================================ -->
+        <!-- HISTORY -->
         <section class="tab-panel" id="tab-history">
           <div class="page-title-row">
             <div>
-              <h2><i class="fa-solid fa-clock-rotate-left"></i> 6. History & Activity Log</h2>
+              <h2><i class="fa-solid fa-clock-rotate-left"></i> History & Activity Log</h2>
               <p>Full chronological audit log of all ChickCheck activities.</p>
             </div>
           </div>
@@ -576,6 +698,11 @@
         </div>
 
         <div class="form-group">
+          <label>Feed Bags Delivered Today (Optional / Supplier Delivery)</label>
+          <input type="number" id="visit-feed-bags-delivered" placeholder="e.g. 50 (Bags Delivered)" min="0">
+        </div>
+
+        <div class="form-group">
           <label>Feedbacks <span class="req">*</span></label>
           <textarea id="visit-feedback-text" rows="3" placeholder="Enter visitor feedback and observations..." required></textarea>
         </div>
@@ -591,6 +718,47 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
           <button type="submit" class="btn btn-primary">Save Visit</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal: Record Feed Delivery (Updates Feed Column & Remaining Stock) -->
+    <div class="modal-card hidden" id="modal-feed-delivery">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-truck-ramp-box"></i> Record Feed Delivery</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="form-record-feed-delivery">
+        <div class="form-group">
+          <label>Delivery Date <span class="req">*</span></label>
+          <input type="date" id="feed-delivery-date" required>
+        </div>
+
+        <div class="form-group">
+          <label>Delivered By / Supplier Name <span class="req">*</span></label>
+          <input type="text" id="feed-delivery-supplier" placeholder="e.g. GreenFeeds Supplier / Ramesh" required>
+        </div>
+
+        <div class="form-group">
+          <label>Assigned Ongoing Batch <span class="req">*</span></label>
+          <select id="feed-delivery-batch-select" required>
+            <!-- Dynamically populated with ongoing active batches -->
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Number of Feed Bags Delivered <span class="req">*</span></label>
+          <input type="number" id="feed-delivery-bags" placeholder="e.g. 50" min="1" required>
+        </div>
+
+        <div class="form-group">
+          <label>Delivery Feedbacks & Invoice Notes</label>
+          <textarea id="feed-delivery-notes" rows="2" placeholder="e.g. 50 Bags Broiler Starter Feed delivered in good condition"></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save & Update Feed Column</button>
         </div>
       </form>
     </div>
@@ -773,6 +941,151 @@
           <button type="submit" class="btn btn-primary">Log Expense</button>
         </div>
       </form>
+    </div>
+
+    <!-- Modal: Complete Batch & Calculate Profit / Gain Settlement -->
+    <div class="modal-card hidden" id="modal-complete-batch" style="max-width: 550px;">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-circle-check" style="color:#16A34A;"></i> Complete Batch & Calculate Profit</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="form-complete-batch">
+        <input type="hidden" id="settle-batch-index">
+        <div class="form-group">
+          <label>Ongoing Batch Name & RFQ</label>
+          <input type="text" id="settle-batch-name" class="readonly-input" readonly>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Total Weight of Chicks (kg) <span class="req">*</span></label>
+            <input type="number" step="0.1" min="0" id="settle-total-weight" placeholder="e.g. 2500" required>
+          </div>
+          <div class="form-group half">
+            <label>Commission Rate per 1 kg (₹) <span class="req">*</span></label>
+            <input type="number" step="0.1" min="0" id="settle-commission-rate" placeholder="e.g. 12" required>
+          </div>
+        </div>
+
+        <!-- Real-time Financial Settlement Preview Box -->
+        <div class="settlement-calc-box" style="background: var(--bg-input); padding: 1.2rem; border-radius: var(--radius-md); border: 1.5px solid var(--border-light); margin-bottom: 1.2rem;">
+          <h4 style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 800; color: #5C2C1E; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-calculator" style="color: var(--flamingo-primary);"></i> Settlement Calculation Breakdown
+          </h4>
+          
+          <div style="display: flex; flex-direction: column; gap: 0.55rem; font-size: 0.9rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted); font-weight: 600;">Gross Amount (Total Weight × Rate):</span>
+              <strong style="color: #16A34A; font-family: var(--font-heading);" id="calc-gross-amount">₹ 0</strong>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted); font-weight: 600;">Farmer Expenditure for Batch:</span>
+              <strong style="color: #EF4444; font-family: var(--font-heading);" id="calc-batch-expenditure">₹ 0</strong>
+            </div>
+
+            <hr style="border: 0; border-top: 1px dashed var(--border-light); margin: 0.4rem 0;">
+
+            <div style="display: flex; justify-content: space-between; font-size: 1.05rem;">
+              <span style="font-weight: 800; color: #5C2C1E;">Net Profit / Gain for Farmer:</span>
+              <strong style="color: #16A34A; font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem;" id="calc-net-profit">₹ 0</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #16A34A, #15803D); box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);">
+            <i class="fa-solid fa-check-double"></i> Complete & Save Settlement
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal: Update Daily Market Chicken Price -->
+    <div class="modal-card hidden" id="modal-log-price" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-indian-rupee-sign" style="color:#16A34A;"></i> Update Daily Chicken Market Price</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="form-log-price">
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Date <span class="req">*</span></label>
+            <input type="date" id="price-date" required>
+          </div>
+          <div class="form-group half">
+            <label>Price per 1 kg (₹) <span class="req">*</span></label>
+            <input type="number" step="0.5" min="1" id="price-per-kg" placeholder="e.g. 138.50" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Market Location / Mandi <span class="req">*</span></label>
+          <input type="text" id="price-region" placeholder="e.g. Local Poultry Mandi / Regional Farm Rate" value="Local Poultry Mandi" required>
+        </div>
+
+        <div class="form-group">
+          <label>Market Notes / Factors (Optional)</label>
+          <textarea id="price-notes" rows="2" placeholder="e.g. High demand during festival week, supply constraint"></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #16A34A, #15803D);">
+            <i class="fa-solid fa-check"></i> Save Daily Market Price
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal: Gmail User Identity Verification -->
+    <div class="modal-card hidden" id="modal-verify-gmail" style="max-width: 460px;">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-envelope-circle-check" style="color:var(--flamingo-primary);"></i> Verify Gmail Identity</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+
+      <div style="padding: 1.2rem; display: flex; flex-direction: column; gap: 1.2rem;">
+        
+        <!-- Google Sign-In Quick Auth Button -->
+        <div style="text-align:center;">
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;">Verify instantly using your official Google Account:</p>
+          <button type="button" class="btn" id="btn-google-oauth-signin" style="width:100%; justify-content:center; gap:0.65rem; background:#FFF; border:1.5px solid var(--border-light); color:#3c4043; font-weight:700; box-shadow:0 2px 8px rgba(0,0,0,0.06); padding:0.75rem;">
+            <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.259h2.908c1.702-1.567 2.684-3.874 2.684-6.617z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+            Sign in & Verify with Google
+          </button>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:0.75rem; color:var(--text-muted); font-size:0.78rem; font-weight:700;">
+          <hr style="flex:1; border:none; border-top:1px dashed var(--border-light);">
+          <span>OR VERIFY VIA GMAIL OTP</span>
+          <hr style="flex:1; border:none; border-top:1px dashed var(--border-light);">
+        </div>
+
+        <!-- Step 1: Send OTP -->
+        <form id="form-send-gmail-otp" style="display:flex; flex-direction:column; gap:0.85rem;">
+          <div class="form-group">
+            <label>Gmail Address <span class="req">*</span></label>
+            <input type="email" id="gmail-verification-input" placeholder="e.g. rajesh.farmer@gmail.com" required>
+          </div>
+          <button type="submit" class="btn btn-primary" id="btn-send-otp" style="justify-content:center;">
+            <i class="fa-solid fa-paper-plane"></i> Send 6-Digit Verification Code
+          </button>
+        </form>
+
+        <!-- Step 2: Enter OTP Code (Hidden initially) -->
+        <form id="form-submit-gmail-otp" class="hidden" style="display:flex; flex-direction:column; gap:0.85rem; background:var(--bg-input); padding:1rem; border-radius:var(--radius-md); border:1px solid var(--border-light);">
+          <div class="form-group">
+            <label style="color:#16A34A; font-weight:700;"><i class="fa-solid fa-key"></i> Enter 6-Digit Code sent to <span id="target-gmail-label"></span></label>
+            <input type="text" id="gmail-otp-input" maxlength="6" placeholder="e.g. 584920" style="letter-spacing:0.25em; font-size:1.2rem; font-weight:800; text-align:center;" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="background:linear-gradient(135deg, #16A34A, #15803D); justify-content:center;">
+            <i class="fa-solid fa-user-check"></i> Verify Code & Authenticate
+          </button>
+        </form>
+
+      </div>
     </div>
 
   </div>
